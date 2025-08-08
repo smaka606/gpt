@@ -67,22 +67,23 @@
                 <!-- Search and Filter Controls -->
                 <div class="product-controls">
                     <div class="search-control">
-                        <input type="text" id="search-input" placeholder="ابحث بالاسم..." aria-label="ابحث بالاسم">
+                        <input type="text" id="searchInput" placeholder="ابحث بالاسم..." aria-label="ابحث بالاسم">
+                        <button id="topRequestBtn" class="btn btn--primary">اطلب قائمة الأسعار</button>
                     </div>
                     <div class="filter-control" role="group" aria-label="تصفية حسب الفئة">
-                        <button class="filter-btn active" data-category="all">الكل</button>
-                        <button class="filter-btn" data-category="shrimp">الجمبري</button>
-                        <button class="filter-btn" data-category="fish">الأسماك</button>
-                        <button class="filter-btn" data-category="squid">الحبار</button>
-                        <button class="filter-btn" data-category="crab-lobster">السلطعون والاستاكوزا</button>
-                        <button class="filter-btn" data-category="herring">الرنجة والفسيخ</button>
-                        <button class="filter-btn" data-category="salmon">السلمون</button>
-                        <button class="filter-btn" data-category="miscellaneous">متنوعة</button>
+                        <button class="filter-btn active" data-cat="">الكل</button>
+                        <button class="filter-btn" data-cat="shrimp">الجمبري</button>
+                        <button class="filter-btn" data-cat="fish">الأسماك</button>
+                        <button class="filter-btn" data-cat="squid">الحبار</button>
+                        <button class="filter-btn" data-cat="crab-lobster">السلطعون والاستاكوزا</button>
+                        <button class="filter-btn" data-cat="herring">الرنجة والفسيخ</button>
+                        <button class="filter-btn" data-cat="salmon">السلمون</button>
+                        <button class="filter-btn" data-cat="miscellaneous">متنوعة</button>
                     </div>
                 </div>
 
                 <!-- Products Grid -->
-                <div id="products-grid" class="products-grid" aria-live="polite">
+                <div id="products-grid" class="product-grid" aria-live="polite">
                     <!-- Products will be dynamically injected here by JavaScript -->
                 </div>
 

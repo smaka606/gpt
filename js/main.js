@@ -36,79 +36,82 @@ const App = {
 
     initProductsPage: function() {
         const productsGrid = document.getElementById('products-grid');
-        if (!productsGrid) return; // Only run on products page
+        if (!productsGrid) return;
 
-        // 1. Create all card elements and append them to the grid
-        products.forEach(product => {
-            const card = document.createElement('div');
-            // Add category class for Isotope filtering
-            card.className = `product-card product-card--page ${product.category}`;
+        let activeCategory = null;
+        let debounceTimer;
+        const searchInput = document.getElementById('searchInput');
 
-            card.innerHTML = `
-                <div class="product-card__image" style="background-image: url('${product.image}');"></div>
-                <div class="product-card__content">
-                    <div>
-                        <h3 class="product-card__title">${product.name}</h3>
-                        <p class="product-card__description">${product.description}</p>
+        function renderProducts(filteredProducts) {
+            productsGrid.innerHTML = '';
+            if (!filteredProducts || filteredProducts.length === 0) {
+                // You might want to show a 'no results' message here
+                return;
+            }
+
+            filteredProducts.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.id = encodeURIComponent(p.name); // Add id for linking
+                card.innerHTML = `
+                    <div class="product-thumb">
+                        <img src="${p.image}" alt="${p.name}" loading="lazy">
                     </div>
-                    <a href="#" class="btn btn--primary product-price-btn" data-product-name="${product.name}">عرض السعر</a>
-                </div>
-            `;
-            productsGrid.appendChild(card);
+                    <div class="product-body">
+                        <h3 class="product-card__title">${p.name}</h3>
+                        <p class="product-card__description">${p.description}</p>
+                        <button class="btn btn--primary product-price-btn" data-product-name="${p.name}">عرض السعر</button>
+                    </div>
+                `;
+                productsGrid.appendChild(card);
+            });
+        }
+
+        function applyFilters() {
+            const q = searchInput.value.trim().toLowerCase();
+            const filtered = products.filter(p => {
+                const matchCat = !activeCategory || p.category === activeCategory;
+                const matchSearch = !q || p.name.toLowerCase().includes(q) || (p.description && p.description.toLowerCase().includes(q));
+                return matchCat && matchSearch;
+            });
+            renderProducts(filtered);
+        }
+
+        searchInput.addEventListener('input', () => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(applyFilters, 250);
         });
 
-        // 2. Initialize Isotope
-        const $grid = $('.products-grid').isotope({
-            itemSelector: '.product-card',
-            layoutMode: 'fitRows',
-            // Set initial sort to something logical if needed, e.g., by name
-            getSortData: {
-                name: '.product-card__title'
-            },
-            sortBy: 'name'
-        });
-
-        // Handle imagesLoaded to relayout after images are loaded
-        $grid.imagesLoaded().progress( function() {
-            $grid.isotope('layout');
-        });
-
-        // 3. Handle filter button clicks
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const filterValue = button.dataset.category === 'all' ? '*' : `.${button.dataset.category}`;
-                $grid.isotope({ filter: filterValue });
-
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                activeCategory = btn.dataset.cat || null;
+                applyFilters();
             });
         });
 
-        // 4. Handle search input
-        const searchInput = document.getElementById('search-input');
-        searchInput.addEventListener('keyup', () => {
-            const searchTerm = searchInput.value.toLowerCase();
-            $grid.isotope({
-                filter: function() {
-                    // Combine with the current category filter
-                    const categoryFilter = document.querySelector('.filter-btn.active').dataset.category;
-                    const matchesCategory = categoryFilter === 'all' || $(this).hasClass(categoryFilter);
+        // Initial render
+        applyFilters();
 
-                    const name = $(this).find('.product-card__title').text().toLowerCase();
-                    return matchesCategory && name.includes(searchTerm);
-                }
-            });
+        // --- WhatsApp Button Logic ---
+        function orderWhatsApp(productName) {
+            const phone = '201143343338';
+            const link = `${location.origin}${location.pathname}#${encodeURIComponent(productName)}`;
+            const msg = `Hello Mohamed, please send me the price for ${productName}. Link: ${link}`;
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        document.getElementById('topRequestBtn').addEventListener('click', () => {
+            const phone = '201143343338';
+            const msg = 'Hello Mohamed, I would like a full price list of available products.';
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
         });
 
-        // 5. Handle WhatsApp button clicks (event delegation)
         productsGrid.addEventListener('click', function(e) {
             if (e.target.classList.contains('product-price-btn')) {
-                e.preventDefault();
                 const productName = e.target.dataset.productName;
-                const message = `مساء الخير، ممكن تبعتلي عرض سعر لـ ${productName}`;
-                const whatsappUrl = `https://wa.me/201143343338?text=${encodeURIComponent(message)}`;
-                window.open(whatsappUrl, '_blank');
+                orderWhatsApp(productName);
             }
         });
     },
