@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المنتجات - شركة الفهد للمنتجات البحرية</title>
+    <meta name="description" content="تصفح مجموعتنا الواسعة من المنتجات البحرية الطازجة عالية الجودة - جمبري، أسماك، كاليماري، أستاكوزا وأكثر">
+    <meta name="keywords" content="منتجات بحرية, جمبري, سمك, كاليماري, أستاكوزا, سلمون, رنجة, فسيخ">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="المنتجات - شركة الفهد للمنتجات البحرية">
+    <meta property="og:description" content="تصفح مجموعتنا الواسعة من المنتجات البحرية الطازجة عالية الجودة">
+    <meta property="og:image" content="images/logo.png">
+    <meta property="og:type" content="website">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/logo.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav container" role="navigation" aria-label="التنقل الرئيسي">
+            <a href="index.html" class="nav-brand" aria-label="الصفحة الرئيسية">
+                <img src="images/logo.png" alt="شعار شركة الفهد" class="logo">
+                <h2>شركة الفهد</h2>
+            </a>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">الرئيسية</a></li>
+                <li><a href="products.html" class="nav-link active" aria-current="page">المنتجات</a></li>
+                <li><a href="about.html" class="nav-link">من نحن</a></li>
+                <li><a href="contact.html" class="nav-link">اتصل بنا</a></li>
+            </ul>
+            
+            <button class="nav-toggle" id="navToggle" aria-label="فتح القائمة" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="products-page">
+        <div class="container">
+            <!-- Page Header -->
+            <header class="page-header">
+                <h1 class="page-title">منتجاتنا البحرية</h1>
+                <p class="page-subtitle">اكتشف مجموعتنا الواسعة من المنتجات البحرية الطازجة عالية الجودة</p>
+            </header>
+            
+            <!-- Search and Filter Section -->
+            <section class="products-controls" aria-labelledby="controls-title">
+                <h2 id="controls-title" class="sr-only">البحث والتصفية</h2>
+                
+                <div class="search-container">
+                    <label for="searchInput" class="sr-only">البحث في المنتجات</label>
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="ابحث عن منتج..." 
+                        class="search-input"
+                        aria-describedby="search-help"
+                    >
+                    <button class="search-btn" type="button" aria-label="بحث">
+                        <span>بحث</span>
+                    </button>
+                </div>
+                <div id="search-help" class="sr-only">اكتب اسم المنتج للبحث السريع</div>
+                
+                <div class="filter-container">
+                    <h3>تصفية حسب الفئة:</h3>
+                    <div class="filter-buttons" role="group" aria-label="تصفية المنتجات حسب الفئة">
+                        <button class="filter-btn active" data-category="all" type="button">جميع المنتجات</button>
+                        <button class="filter-btn" data-category="shrimp" type="button">الجمبري</button>
+                        <button class="filter-btn" data-category="fish" type="button">الأسماك</button>
+                        <button class="filter-btn" data-category="squid" type="button">الحبار</button>
+                        <button class="filter-btn" data-category="crab-lobster" type="button">السلطعون والاستاكوزا</button>
+                        <button class="filter-btn" data-category="herring" type="button">الرنجة والفسيخ</button>
+                        <button class="filter-btn" data-category="salmon" type="button">السلمون</button>
+                        <button class="filter-btn" data-category="miscellaneous" type="button">متنوعة</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Products Grid -->
+            <section class="products-section" aria-labelledby="products-title">
+                <h2 id="products-title" class="sr-only">قائمة المنتجات</h2>
+                <div id="productsGrid" class="products-grid" role="region" aria-live="polite" aria-label="نتائج البحث">
+                    <!-- Products will be generated by JavaScript -->
+                </div>
+                
+                <div id="noResults" class="no-results" style="display: none;" role="status" aria-live="polite">
+                    <h3>لم يتم العثور على منتجات</h3>
+                    <p>لم يتم العثور على منتجات تطابق البحث أو التصفية المحددة. جرب كلمات بحث أخرى أو اختر فئة مختلفة.</p>
+                    <button class="btn btn-primary" onclick="clearFilters()" type="button">
+                        <span>إعادة تعيين البحث</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Product Categories Info -->
+            <section class="categories-info section" aria-labelledby="categories-title">
+                <div class="container">
+                    <h2 id="categories-title" class="section-title">فئات منتجاتنا</h2>
+                    <div class="grid-4">
+                        <article class="card">
+                            <h3 class="card-title">الجمبري</h3>
+                            <p class="card-description">تشكيلة متنوعة من الجمبري الطازج بأحجام مختلفة، مثالي للقلي والشوي والطبخات المتنوعة</p>
+                        </article>
+                        
+                        <article class="card">
+                            <h3 class="card-title">الأسماك</h3>
+                            <p class="card-description">أسماك طازجة من البحر الأبيض والأحمر والنيل، تشمل البلطي والبوري والموسى والدنيس</p>
+                        </article>
+                        
+                        <article class="card">
+                            <h3 class="card-title">الحبار والأخطبوط</h3>
+                            <p class="card-description">كاليماري طازج وأخطبوط بأحجام مختلفة، مثالي للقلي والشوي والسلطات البحرية</p>
+                        </article>
+                        
+                        <article class="card">
+                            <h3 class="card-title">السلطعون والاستاكوزا</h3>
+                            <p class="card-description">أستاكوزا طازجة وسلطعون عالي الجودة، مثالي للمناسبات الخاصة والأطباق الفاخرة</p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Order Information -->
+            <section class="order-info section section-alt" aria-labelledby="order-title">
+                <div class="container">
+                    <h2 id="order-title" class="section-title">كيفية الطلب</h2>
+                    <div class="grid-3">
+                        <article class="card">
+                            <h3 class="card-title">1. اختر المنتج</h3>
+                            <p class="card-description">تصفح منتجاتنا واختر ما يناسبك من تشكيلتنا الواسعة من المنتجات البحرية الطازجة</p>
+                        </article>
+                        
+                        <article class="card">
+                            <h3 class="card-title">2. اطلب عبر الواتساب</h3>
+                            <p class="card-description">اضغط على زر "اطلب عبر الواتساب" وسيتم فتح محادثة مع اسم المنتج جاهز للإرسال</p>
+                        </article>
+                        
+                        <article class="card">
+                            <h3 class="card-title">3. استلم طلبك</h3>
+                            <p class="card-description">سيصلك طلبك خلال ساعتين داخل القاهرة مع ضمان النضارة والجودة</p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>شركة الفهد</h3>
+                    <p>شركة رائدة متخصصة في تجارة المأكولات البحرية والمنتجات البحرية عالية الجودة مع خدمة توصيل متميزة على مدار الساعة.</p>
+                    <div class="footer-logo">
+                        <img src="images/logo.png" alt="شعار شركة الفهد" style="height: 60px; margin-top: 1rem;">
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>روابط سريعة</h4>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="products.html">المنتجات</a></li>
+                        <li><a href="about.html">من نحن</a></li>
+                        <li><a href="contact.html">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>تواصل معنا</h4>
+                    <p><strong>هاتف وواتساب:</strong></p>
+                    <p><a href="tel:+201143343338">+20 11 43343338</a></p>
+                    <p><strong>البريد الإلكتروني:</strong></p>
+                    <p><a href="mailto:info@alfahd.com">info@alfahd.com</a></p>
+                    <p><strong>وسائل التواصل:</strong></p>
+                    <p><a href="#" target="_blank" rel="noopener">فيسبوك: Al Fahd Company</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>ساعات العمل</h4>
+                    <p><strong>الأحد - الخميس:</strong><br>8:00 ص - 10:00 م</p>
+                    <p><strong>الجمعة - السبت:</strong><br>9:00 ص - 11:00 م</p>
+                    <p><strong>خدمة التوصيل:</strong><br>متاحة 24 ساعة</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 شركة الفهد للمنتجات البحرية. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>
+
